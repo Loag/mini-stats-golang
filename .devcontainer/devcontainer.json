@@ -1,0 +1,25 @@
+{
+  "name": "mini-stats-golang-dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/go": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "go.lintFlags": [
+          "--enable-all",
+          "--new"
+        ],
+        "go.useLanguageServer": true
+      },
+      "extensions": [
+        "golang.go",
+        "enkia.tokyo-night",
+        "ms-azuretools.vscode-docker",
+        "PKief.material-icon-theme"
+      ]
+    }
+  }
+}
