@@ -12,8 +12,8 @@ func main() {
 
 	ministatsopts := client.MiniStatsClientOptions{
 		Debug:    true,
-		ApiKey:   "key_here",
-		Endpoint: "host.docker.internal:5000",
+		ApiKey:   "your_api_key",
+		Endpoint: "your_endpoint",
 		Interval: 15,
 	}
 	ministats := client.New(ministatsopts)

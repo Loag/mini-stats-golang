@@ -20,8 +20,8 @@ func (g *Gauge) Set(value int64) {
 	atomic.SwapInt64(&g.value, value)
 }
 
-func (c *Gauge) GetValue() Instance {
-	return Instance{
+func (c *Gauge) getValue() instance {
+	return instance{
 		Name:        c.name,
 		Value:       float64(c.value),
 		MessageType: "GAUGE",

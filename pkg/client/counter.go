@@ -20,8 +20,8 @@ func (c *Counter) Inc() {
 	atomic.AddInt64(&c.value, 1)
 }
 
-func (c *Counter) GetValue() Instance {
-	return Instance{
+func (c *Counter) getValue() instance {
+	return instance{
 		Name:        c.name,
 		Value:       float64(c.value),
 		MessageType: "COUNTER",

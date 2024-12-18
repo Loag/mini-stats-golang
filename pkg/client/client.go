@@ -14,14 +14,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type Instance struct {
+type instance struct {
 	Name        string
 	MessageType string
 	Value       float64
 	Time        int64
 }
 
-func (i *Instance) ToMsg() *pb.IngestRequest {
+func (i *instance) ToMsg() *pb.IngestRequest {
 
 	return &pb.IngestRequest{
 		Name:       i.Name,
@@ -42,8 +42,8 @@ func get_metric_type(input string) pb.MetricType {
 	}
 }
 
-type Metric interface {
-	GetValue() Instance
+type metric interface {
+	getValue() instance
 }
 
 type MiniStatsClientOptions struct {
@@ -55,7 +55,7 @@ type MiniStatsClientOptions struct {
 
 type MiniStatsClient struct {
 	client   pb.IngestServiceClient
-	metrics  []Metric
+	metrics  []metric
 	debug    bool
 	key      string
 	endpoint string
@@ -77,8 +77,8 @@ func New(opts MiniStatsClientOptions) *MiniStatsClient {
 	}
 }
 
-func (m *MiniStatsClient) AddMetric(metric Metric) *MiniStatsClient {
-	m.metrics = append(m.metrics, metric)
+func (m *MiniStatsClient) AddMetric(input metric) *MiniStatsClient {
+	m.metrics = append(m.metrics, input)
 	return m
 }
 
@@ -109,12 +109,12 @@ func (m *MiniStatsClient) Start() {
 				log.Info().Msg("iterating set metrics")
 			}
 
-			instance := metric.GetValue()
+			instance := metric.getValue()
 
 			_, err := c.Ingest(context.Background(), instance.ToMsg())
 
 			if err != nil {
-				log.Err(err).Msgf("unable to metric with name: %s", instance.Name)
+				log.Err(err).Msgf("unable to publish metric with name: %s", instance.Name)
 			}
 		}
 	}
